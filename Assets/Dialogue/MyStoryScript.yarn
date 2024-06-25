@@ -1,0 +1,237 @@
+//------------------------------------------------------------------------
+//                                  Start
+//------------------------------------------------------------------------
+title: Start
+---
+<<declare $mission = "none">>
+<<set_enabled "NPC" false>>
+Hello, welcome to the framework.
+Would you like a demonstration of the features?
+->Yes
+    <<jump DemonstrateFeatures>>
+->No
+===
+
+//------------------------------------------------------------------------
+//                                  DemonstrateFeatures
+//------------------------------------------------------------------------
+title: DemonstrateFeatures
+---
+What feature do you want to see?
+->Playing a basic animation
+    <<jump SimpleAnimation>>
+->Playing a basic sound effect
+    <<jump SimpleAudio>>
+->Showing a UI menu
+    <<jump ShowMenu>>
+->Inventory item
+    <<jump Inventory>>
+->Showing particles
+    <<jump Particles>>
+->Showing a code lock puzzle
+    <<jump CodeLock>>
+->Displaying a yarnspinner scene
+    <<jump YarnSpinnerScene>>
+->Opening/closing a box
+    <<jump OpenCloseBox>>
+->Set missions
+    <<jump Missions>>
+===
+
+//------------------------------------------------------------------------
+//                                  SimpleAnimation
+//------------------------------------------------------------------------
+title: SimpleAnimation
+---
+<<show_path "Player" "SimpleAnimationTrigger">>
+This is a demonstration of SimpleAnimationTrigger.
+You can add an animation to an object using the Animation window.
+When you add SimpleAnimationTrigger, the animation will be paused at the start.
+If you activate it (press E), the animation will play.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  SimpleAudio
+//------------------------------------------------------------------------
+title: SimpleAudio
+---
+<<show_path "Player" "SimpleAudioTrigger">>
+This is a demonstration of SimpleAudioTrigger.
+You can add a sound effect to an object using this component.
+If you activate it (press E), the sound will play.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  ShowMenu
+//------------------------------------------------------------------------
+title: ShowMenu
+---
+<<show_path "Player" "MenuTrigger">>
+This is a demonstration of a MenuTrigger.
+This will show a UI node in the Hierarchy window.
+So you need to drag a UI node from the hierarchy onto this component.
+If you activate it (press E), the menu will show.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Inventory
+//------------------------------------------------------------------------
+title: Inventory
+---
+<<show_path "Player" "UseInventoryItem">>
+This is a demonstration of the inventory.
+You can press TAB to see your inventory.
+It is now empty.
+First, try to activate this object by holding down E.
+<<wait 4>>
+Now, let's get the key.
+<<show_path "Player" "Collectable">>
+Pick up the key and go back to the previous cube.
+<<show_path "Player" "UseInventoryItem">>
+Now, try to activate the object by holding down E.
+As you can see, now it works.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Particles
+//------------------------------------------------------------------------
+title: Particles
+---
+<<show_path "Player" "UnityEventTrigger">>
+This is a demonstration of a component called UnityEventTrigger.
+You can use it to activate Unity events.
+With Unity events, you can control Unity-level properties.
+For instance, we use it to display a particle effect by turning it on.
+Press E to try it.
+<<wait 4>>
+Most of the interactable components in the framework could also be done with a Unity event.
+But Unity events offer more control, because you can also set the parameters.
+Feel free to add an object to this component and browse through the events it has.
+Hope you will feel inspired. The possibilities are virtually endless!
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  CodeLock
+//------------------------------------------------------------------------
+title: CodeLock
+---
+<<show_path "Player" "MenuTrigger (CodeLock)">>
+This is a demonstration of a code lock.
+That is a puzzle that was made using Unity UI.
+The right code is set in the CodeLock component that is on the UI.
+If the player makes a guess, the CodeLock component will fire a Unity Event.
+Currently, these events will trigger a scene in the YarnSpinner dialog: RightAnswer and WrongAnswer.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  YarnSpinnerScene
+//------------------------------------------------------------------------
+title: YarnSpinnerScene
+---
+<<show_path "Player" "DialogTrigger">>
+This is a demonstration of DialogTrigger.
+That component will start a scene in the YarnSpinner script.
+It can be used to make NPCs talk.
+Note that the previous dialog must have ended before you can start it.
+The node it will run is called HelloCube in the YarnSpinner script.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  OpenCloseBox
+//------------------------------------------------------------------------
+title: OpenCloseBox
+---
+<<show_path "Player" "AnimationToggle">>
+This is a demonstration of the AnimationToggle component.
+It allows to toggle between a number of animation states.
+You can add those animation states in the Animator window.
+On the component, you can provide a list with the names of the states.
+Under that list, you can select the toggle mode: looped once or random.
+In this case, the component toggles between the Open and Close state.
+This can be used for doors, drawers, closets or chests.
+Press E multiple times to test it.
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Missions
+//------------------------------------------------------------------------
+title: Missions
+---
+Let's show how to make missions.
+We can use a variable for it in the script. We will call the variable $mission.
+This variable is also shown in the HUD, top-left of the screen.
+Currently, the value is "none". We will change it to "find shopkeeper".
+<<set $mission to "find shopkeeper">>
+So our current mission is to find the shopkeeper.
+Let's also give a hint.
+<<show_path "Player" "NPC">>
+<<set_enabled "NPC" true>>
+<<say "NPCHead" "Greetings! You found me, the shopkeeper!">>
+<<say "NPCHead" "Can you find the shiny block for me?">>
+<<set $mission to "find shiny block">>
+//this continues in ShopKeeper scene when user presses E
+===
+
+//------------------------------------------------------------------------
+//                                  ShopKeeper
+//------------------------------------------------------------------------
+title: ShopKeeper
+---
+<<if $mission == "find shiny block">>
+    <<if has_item("Player", "shiny")>>
+        <<say "NPCHead" "Ah! You found it! Well done!">>
+        <<say "NPCHead" "Can you give me the item?">>
+        -> Yes
+            <<take_item "Player" "shiny">>
+            <<say "NPCHead" "Thanks, I will go to Location1.">>
+            <<walk_to "NPC" "Location1">>
+        -> No
+            <<say "NPCHead" "Oh, okay, I will go to Location2.">>
+            <<walk_to "NPC" "Location2">>
+        <<wait 4>>
+        <<jump DemonstrateFeatures>>
+    <<else>>
+        <<say "NPCHead" "Have you found the shiny block yet? Maybe look behind you.">>
+    <<endif>>
+<<endif>>
+===
+
+//------------------------------------------------------------------------
+//                                  HelloCube
+//------------------------------------------------------------------------
+title: HelloCube
+---
+Cube: Hello, this is the HelloCube node!
+===
+
+//------------------------------------------------------------------------
+//                                  RightAnswer
+//------------------------------------------------------------------------
+title: RightAnswer
+---
+That was correct! You should always guess 1234 first.
+===
+
+//------------------------------------------------------------------------
+//                                  WrongAnswer
+//------------------------------------------------------------------------
+title: WrongAnswer
+---
+No, that is not correct. Maybe think about a code like 1234?
+===
