@@ -1,0 +1,295 @@
+//------------------------------------------------------------------------
+//                                  Start
+//------------------------------------------------------------------------
+title: Start
+---
+//check if we are in the right scene
+<<if get_scene() != "Demonstration">>
+    <<jump NoDemonstration>>
+<<endif>>
+//disable all interactivity
+<<set_enabled "NPC" false>>
+<<set_enabled "DialogueTrigger" false>>
+<<set_enabled "SimpleAnimationTrigger" false>>
+<<set_enabled "SimpleAudioTrigger" false>>
+<<set_enabled "MenuTrigger" false>>
+<<set_enabled "UseInventoryItem" false>>
+<<set_enabled "UnityEventTrigger" false>>
+<<set_enabled "MenuTrigger (CodeLock)" false>>
+<<set_enabled "DialogueTrigger" false>>
+<<set_enabled "AnimationToggle" false>>
+//show welcome text
+Hello, welcome to the framework.
+Would you like a demonstration of the features?
+->Yes
+    <<jump DemonstrateFeatures>>
+->No
+    <<jump NoDemonstration>>
+===
+
+//------------------------------------------------------------------------
+//                                  DemonstrateFeatures
+//------------------------------------------------------------------------
+title: DemonstrateFeatures
+---
+What feature do you want to see?
+->Playing a basic animation
+    <<jump SimpleAnimation>>
+->Playing a basic sound effect
+    <<jump SimpleAudio>>
+->Showing a UI menu
+    <<jump ShowMenu>>
+->Inventory item
+    <<jump Inventory>>
+->Showing particles
+    <<jump Particles>>
+->Showing a code lock puzzle
+    <<jump CodeLock>>
+->Starting a YarnSpinner dialogue
+    <<jump YarnSpinnerScene>>
+->Opening/closing a box
+    <<jump OpenCloseBox>>
+->Set quests
+    <<jump Quests>>
+->Stop Demo
+    <<jump NoDemonstration>>
+===
+
+//------------------------------------------------------------------------
+//                                  SimpleAnimation
+//------------------------------------------------------------------------
+title: SimpleAnimation
+---
+<<show_path "Player" "SimpleAnimationTrigger">>
+This is a demonstration of SimpleAnimationTrigger.
+You can add an animation to an object using the Animation window.
+When you add SimpleAnimationTrigger, the animation will be paused at the start.
+If you activate it (press E), the animation will play.
+<<set_enabled "SimpleAnimationTrigger" true>>
+<<wait 4>>
+<<set_enabled "SimpleAnimationTrigger" false>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  SimpleAudio
+//------------------------------------------------------------------------
+title: SimpleAudio
+---
+<<show_path "Player" "SimpleAudioTrigger">>
+This is a demonstration of SimpleAudioTrigger.
+You can add a sound effect to an object using this component.
+If you activate it (press E), the sound will play.
+<<set_enabled "SimpleAudioTrigger" true>>
+<<wait 4>>
+<<set_enabled "SimpleAudioTrigger" false>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  ShowMenu
+//------------------------------------------------------------------------
+title: ShowMenu
+---
+<<show_path "Player" "MenuTrigger">>
+This is a demonstration of a MenuTrigger.
+This will show a UI node in the Hierarchy window.
+So you need to drag a UI node from the hierarchy onto this component.
+If you activate it (press E), the menu will show.
+<<set_enabled "MenuTrigger" true>>
+<<wait 4>>
+<<set_enabled "MenuTrigger" false>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Inventory
+//------------------------------------------------------------------------
+title: Inventory
+---
+<<show_path "Player" "UseInventoryItem">>
+This is a demonstration of the inventory.
+You can press TAB to see your inventory.
+It is now empty.
+First, try to activate this object by holding down E.
+<<set_enabled "UseInventoryItem" true>>
+<<wait 4>>
+<<set_enabled "UseInventoryItem" false>>
+Now, let's get the key.
+<<show_path "Player" "Collectable">>
+Pick up the key and go back to the previous cube.
+<<show_path "Player" "UseInventoryItem">>
+Now, try to activate the object by holding down E.
+As you can see, now it works.
+<<set_enabled "UseInventoryItem" true>>
+<<wait 4>>
+<<set_enabled "UseInventoryItem" false>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Particles
+//------------------------------------------------------------------------
+title: Particles
+---
+<<show_path "Player" "UnityEventTrigger">>
+This is a demonstration of a component called UnityEventTrigger.
+You can use it to activate Unity events.
+With Unity events, you can control Unity-level properties.
+For instance, we use it to display a particle effect by turning it on.
+Press E to try it.
+<<set_enabled "UnityEventTrigger" true>>
+<<wait 4>>
+<<set_enabled "UnityEventTrigger" false>>
+Most of the interactable components in the framework could also be done with a Unity event.
+But Unity events offer more control, because you can also set the parameters.
+Feel free to add an object to this component and browse through the events it has.
+Hope you will feel inspired. The possibilities are virtually endless!
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  CodeLock
+//------------------------------------------------------------------------
+title: CodeLock
+---
+<<show_path "Player" "MenuTrigger (CodeLock)">>
+This is a demonstration of a code lock.
+That is a puzzle that was made using Unity UI.
+The right code is set in the CodeLock component that is on the UI.
+If the player makes a guess, the CodeLock component will fire a Unity Event.
+Currently, these events will trigger a scene in the YarnSpinner dialogue (RightAnswer or WrongAnswer)
+<<set_enabled "MenuTrigger (CodeLock)" true>>
+<<wait 4>>
+<<set_enabled "MenuTrigger (CodeLock)" false>>
+<<wait 8>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  YarnSpinnerScene
+//------------------------------------------------------------------------
+title: YarnSpinnerScene
+---
+<<show_path "Player" "DialogueTrigger">>
+This is a demonstration of DialogueTrigger.
+That component will start a scene in the YarnSpinner script.
+It can be used to make NPCs talk.
+Note that the previous dialogue must have ended before you can start it.
+Since this demo dialogue is already playing, a second DialogueSystem was added to the project.
+The node it will run is called HelloCube in the YarnSpinner script.
+Press E to test it.
+<<set_enabled "DialogueTrigger" true>>
+<<wait 4>>
+<<set_enabled "DialogueTrigger" false>>
+<<wait 4>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  OpenCloseBox
+//------------------------------------------------------------------------
+title: OpenCloseBox
+---
+<<show_path "Player" "AnimationToggle">>
+This is a demonstration of the AnimationToggle component.
+It allows to toggle between a number of animation states.
+You can add those animation states in the Animator window.
+On the component, you can provide a list with the names of the states.
+Under that list, you can select the toggle mode (looped, once or random).
+In this case, the component toggles between the Open and Close state.
+This can be used for doors, drawers, closets or chests.
+Press E multiple times to test it.
+<<set_enabled "AnimationToggle" true>>
+<<wait 6>>
+<<set_enabled "AnimationToggle" false>>
+<<jump DemonstrateFeatures>>
+===
+
+//------------------------------------------------------------------------
+//                                  Quests
+//------------------------------------------------------------------------
+title: Quests
+---
+<<declare $quest = "none">>
+Let's show how to make quests.
+We can use a variable for it in the script. We will call the variable $quest.
+This variable is also shown in the HUD, top-left of the screen.
+Currently, the value is "none". We will change it to "find shopkeeper".
+<<set $quest to "find shopkeeper">>
+So our current quest is to find the shopkeeper.
+Let's also give a hint.
+<<show_path "Player" "NPC">>
+<<say "NPCHead" "Greetings! You found me, the shopkeeper!">>
+<<say "NPCHead" "Can you find the shiny block for me?">>
+<<set $quest to "find shiny block">>
+<<set_enabled "NPC" true>>
+//this continues in ShopKeeper scene when user presses E
+===
+
+//------------------------------------------------------------------------
+//                                  ShopKeeper
+//------------------------------------------------------------------------
+title: ShopKeeper
+---
+<<if $quest == "find shiny block">>
+    <<if has_item("Player", "shiny")>>
+        <<say "NPCHead" "Ah! You found it! Well done!">>
+        <<say "NPCHead" "Can you give me the item?">>
+        -> Yes
+            <<take_item "Player" "shiny">>
+            <<say "NPCHead" "Thanks, I will go to Location1.">>
+            <<walk_to "NPC" "Location1">>
+        -> No
+            <<say "NPCHead" "Oh, okay, I will go to Location2.">>
+            <<walk_to "NPC" "Location2">>
+        <<wait 4>>
+        <<jump DemonstrateFeatures>>
+    <<else>>
+        <<say "NPCHead" "Have you found the shiny block yet? Maybe look behind you.">>
+    <<endif>>
+<<endif>>
+===
+
+//------------------------------------------------------------------------
+//                                  HelloCube
+//------------------------------------------------------------------------
+title: HelloCube
+---
+Cube: Hello, this is the HelloCube node!
+===
+
+//------------------------------------------------------------------------
+//                                  RightAnswer
+//------------------------------------------------------------------------
+title: RightAnswer
+---
+That was correct! You should always guess 1234 first.
+===
+
+//------------------------------------------------------------------------
+//                                  WrongAnswer
+//------------------------------------------------------------------------
+title: WrongAnswer
+---
+No, that is not correct. Maybe the code is 1234?
+===
+
+//------------------------------------------------------------------------
+//                                  NoDemonstration
+//------------------------------------------------------------------------
+title: NoDemonstration
+---
+    //enable all interactivity before exiting (except NPC)
+    <<set_enabled "DialogueTrigger" true>>
+    <<set_enabled "SimpleAnimationTrigger" true>>
+    <<set_enabled "SimpleAudioTrigger" true>>
+    <<set_enabled "MenuTrigger" true>>
+    <<set_enabled "UseInventoryItem" true>>
+    <<set_enabled "UnityEventTrigger" true>>
+    <<set_enabled "MenuTrigger (CodeLock)" true>>
+    <<set_enabled "DialogueTrigger" true>>
+    <<set_enabled "AnimationToggle" true>>
+    <<stop>>
+===

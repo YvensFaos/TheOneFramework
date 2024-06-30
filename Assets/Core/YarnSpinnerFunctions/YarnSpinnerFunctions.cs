@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public static class YarnSpinnerFunctions
@@ -214,5 +215,93 @@ public static class YarnSpinnerFunctions
             return null;
         }
     }
+
+   [YarnCommand("playerpref_save_string")]
+    public static void PlayerPrefSaveString(string id, string value)
+    {
+        PlayerPrefs.SetString(id, value);
+        PlayerPrefs.Save();
+    }
+
+    [YarnCommand("playerpref_save_int")]
+    public static void PlayerPrefSaveInt(string id, int value)
+    {
+        PlayerPrefs.SetInt(id, value);
+        PlayerPrefs.Save();
+    }
+
+    [YarnCommand("playerpref_save_bool")]
+    public static void PlayerPrefSaveBool(string id, bool value)
+    {
+        PlayerPrefs.SetInt(id, value ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    [YarnFunction("playerpref_load_string")]
+    public static string PlayerPrefLoadString(string id)
+    {
+        if (PlayerPrefs.HasKey(id))
+        {
+            return PlayerPrefs.GetString(id);
+        }
+        else
+        {
+            Debug.LogWarning($"Key '{id}' not found in PlayerPrefs.");
+            return string.Empty;
+        }
+    }
+
+    [YarnFunction("playerpref_load_int")]
+    public static int PlayerPrefLoadInt(string id)
+    {
+        if (PlayerPrefs.HasKey(id))
+        {
+            return PlayerPrefs.GetInt(id);
+        }
+        else
+        {
+            Debug.LogWarning($"Key '{id}' not found in PlayerPrefs.");
+            return 0; // or another default value
+        }
+    }
+
+    [YarnFunction("playerpref_load_bool")]
+    public static bool PlayerPrefLoadBool(string id)
+    {
+        if (PlayerPrefs.HasKey(id))
+        {
+            return PlayerPrefs.GetInt(id) == 1;
+        }
+        else
+        {
+            Debug.LogWarning($"Key '{id}' not found in PlayerPrefs.");
+            return false; // or another default value
+        }
+    }
+
+    [YarnFunction("playerpref_exists")]
+    public static bool PlayerPrefExists(string id)
+    {
+        return PlayerPrefs.HasKey(id);
+    }   
+
+    [YarnFunction("get_scene")]
+    public static string GetCurrentSceneName()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        return currentScene.name;
+    }
+
+    [YarnCommand("load_scene")]
+    public static void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }   
+
+    [YarnCommand("log")]
+    public static void ShowMessageInLog(string text)
+    {
+        Debug.Log(text);
+    }   
 
 }
