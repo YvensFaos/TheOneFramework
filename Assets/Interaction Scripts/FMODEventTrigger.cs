@@ -1,49 +1,74 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using Yarn.Unity;
-// using FMODUnity;
-// using FMOD.Studio;
-// using System;
+#if FMOD_INSTALLED
 
-// public class FMODEventScript : PlayerActivatable 
-// {
-//     public string fmodSoundEvent = "event:/Example";
+    //updated by Ruben H
+    using System.Collections;
+    using UnityEngine;
+    using Yarn.Unity;
+    using FMODUnity;
+    using FMOD.Studio;
+    using System;
 
-//     private bool isPlaying = false;
+    public class FMODEventScript : PlayerActivatable
+    {
+        public EventReference fmodSoundEvent;
 
-//     void PlayOneShot(string path, Vector3 position)
-//     {
-//         EventInstance instance = FMODUnity.RuntimeManager.CreateInstance(path);
-//         instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
-//         instance.start();
-//         isPlaying = true;
-//         StartCoroutine(WaitForSoundToFinish(instance));
-//     }
+        private bool isPlaying = false;
 
-// 	private IEnumerator WaitForSoundToFinish(EventInstance instance)
-// 	{
-// 		PLAYBACK_STATE state = PLAYBACK_STATE.PLAYING;
-// 		while (state != PLAYBACK_STATE.STOPPED)
-// 		{
-// 			yield return null;
-// 			instance.getPlaybackState(out state);
-// 		}
-//         isPlaying = false;
-// 		instance.setUserData(IntPtr.Zero);
-// 		instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-// 		instance.release();
-// 	}    
+        void PlayOneShot(EventReference eventReference, Vector3 position)
+        {
+            EventInstance instance = FMODUnity.RuntimeManager.CreateInstance(eventReference);
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+            instance.start();
+            isPlaying = true;
+            StartCoroutine(WaitForSoundToFinish(instance));
+        }
 
-//     override protected void OnActivate()
-//     {
-//         if (!string.IsNullOrEmpty(fmodSoundEvent)) {
-//             PlayOneShot(fmodSoundEvent, transform.position);
-//         }
-//     }
+        private IEnumerator WaitForSoundToFinish(EventInstance instance)
+        {
+            PLAYBACK_STATE state = PLAYBACK_STATE.PLAYING;
+            while (state != PLAYBACK_STATE.STOPPED)
+            {
+                yield return null;
+                instance.getPlaybackState(out state);
+            }
+            isPlaying = false;
+            instance.setUserData(IntPtr.Zero);
+            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.release();
+        }
 
-//     override protected bool IsActivated() 
-//     {
-//         return isPlaying;
-//     }
-// }
+        protected override void OnActivate()
+        {
+            if (fmodSoundEvent.IsNull == false)
+            {
+                PlayOneShot(fmodSoundEvent, transform.position);
+            }
+        }
+
+        protected override bool IsActivated()
+        {
+            return isPlaying;
+        }
+    }
+#else
+    using System.Diagnostics;
+    using UnityEngine;
+
+    public class FMODEventScript : PlayerActivatable
+    {
+        void Awake() 
+        {
+            UnityEngine.Debug.LogError("FMODEventTrigger needs FMOD to be installed.");
+        }
+
+        protected override void OnActivate() 
+        {
+            UnityEngine.Debug.LogError("FMOD is not installed. The event will not activate");
+        }  
+
+        protected override bool IsActivated()
+        {
+            return false;
+        }
+    }
+#endif
