@@ -304,4 +304,32 @@ public static class YarnSpinnerFunctions
         Debug.Log(text);
     }   
 
+    [YarnCommand("wait_until_closed")]
+    public static IEnumerator WaitUntilClosed(string targetName) {
+        GameObject gameObject = null;
+        do {
+            gameObject = GameObject.Find(targetName);
+            yield return new WaitForSeconds(0.1f);
+        } while (gameObject == null);
+        do {
+            gameObject = GameObject.Find(targetName);
+            yield return new WaitForSeconds(0.1f);
+        } while (gameObject != null);
+    }
+
+    [YarnCommand("show_menu")]
+    public static void ShowMenu(string menuName)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == menuName)
+            {
+                obj.SetActive(true);
+                return;
+            }
+        }
+        Debug.LogWarning("UI not found: " + menuName);
+    }
+
 }

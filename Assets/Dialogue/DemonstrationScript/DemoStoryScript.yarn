@@ -97,7 +97,7 @@ This will show a UI node in the Hierarchy window.
 So you need to drag a UI node from the hierarchy onto this component.
 If you activate it (press E), the menu will show.
 <<set_enabled "MenuTrigger" true>>
-<<wait 4>>
+<<wait_until_closed "Letter">>
 <<set_enabled "MenuTrigger" false>>
 <<jump DemonstrateFeatures>>
 ===
@@ -161,7 +161,7 @@ The right code is set in the CodeLock component that is on the UI.
 If the player makes a guess, the CodeLock component will fire a Unity Event.
 Currently, these events will trigger a scene in the YarnSpinner dialogue (RightAnswer or WrongAnswer)
 <<set_enabled "MenuTrigger (CodeLock)" true>>
-<<wait 4>>
+<<wait_until_closed "CodeLock">>
 <<set_enabled "MenuTrigger (CodeLock)" false>>
 <<wait 8>>
 <<jump DemonstrateFeatures>>
