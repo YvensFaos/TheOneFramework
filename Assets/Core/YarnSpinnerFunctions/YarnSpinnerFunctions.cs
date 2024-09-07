@@ -71,8 +71,16 @@ public static class YarnSpinnerFunctions
     {
         GameObject gameObject = FindGameObject(target);
         if (gameObject == null) return;
+        bool hasActivator = false;
+        //this is needed to prevent this function from enabling Activatables that are waiting for an inventory item
         foreach (PlayerActivatable playerActivatable in gameObject.GetComponents<PlayerActivatable>()) {
-            playerActivatable.canBeActivated = mode;
+            if (playerActivatable is UseInventoryItemBase) {
+                hasActivator = true;
+            }
+        }
+        foreach (PlayerActivatable playerActivatable in gameObject.GetComponents<PlayerActivatable>()) {
+            bool ignoreActivators = (playerActivatable is UseInventoryItemBase) || (hasActivator == false);
+            playerActivatable.canBeActivated = ignoreActivators && mode;
         }
     }
 

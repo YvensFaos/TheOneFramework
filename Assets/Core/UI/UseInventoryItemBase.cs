@@ -14,6 +14,7 @@ public class UseInventoryItemBase : PlayerActivatable
 
     public void SetTarget(GameObject target) {
         this.target = target;
+        SetPlayerActivatableState(false);
     }
 
     void SetPlayerActivatableState(bool state) {
