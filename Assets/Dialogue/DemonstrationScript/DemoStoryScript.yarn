@@ -237,6 +237,7 @@ title: ShopKeeper
     <<if has_item("Player", "shiny")>>
         <<say "NPCHead" "Ah! You found it! Well done!">>
         <<say "NPCHead" "Can you give me the item?">>
+        Give the item to the shopkeeper?
         -> Yes
             <<take_item "Player" "shiny">>
             <<say "NPCHead" "Thanks, I will go to Location1.">>
