@@ -53,9 +53,9 @@ namespace StarterAssets
 			if(cursorInputForLook)
 			{
 				var lookAroundValue = value.Get<Vector2>();
-				if (lookAroundValue.magnitude < 5.0f) { //input system ftw
+				//if (lookAroundValue.magnitude < 5.0f) { //input system ftw
 					LookInput(lookAroundValue);
-				}
+				//}
 			}
 		}
 
