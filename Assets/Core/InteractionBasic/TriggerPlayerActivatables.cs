@@ -6,7 +6,7 @@ public class TriggerPlayerActivatables : MonoBehaviour
 {
     private HashSet<PlayerActivatable> _previousHits = new HashSet<PlayerActivatable>();
     private HashSet<PlayerActivatable> _currentHits = new HashSet<PlayerActivatable>();
-
+    
     void Awake() {
         // Ensure a Rigidbody component is present and set it to kinematic
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -16,7 +16,8 @@ public class TriggerPlayerActivatables : MonoBehaviour
         rb.isKinematic = true;
     }
 
-    void Update() {
+    void Update()
+    {
         if (_currentHits.Count == 0) return;
 
         foreach (PlayerActivatable playerActivatable in _currentHits) {
@@ -46,23 +47,27 @@ public class TriggerPlayerActivatables : MonoBehaviour
     }
 
     void OnTriggerExit(Collider other) {
-        PlayerActivatable[] playerActivatables = other.GetComponents<PlayerActivatable>();
-        if (playerActivatables != null) {
-            foreach (PlayerActivatable playerActivatable in playerActivatables) {
-                if (playerActivatable != null) {
-                    _currentHits.Remove(playerActivatable);
-                }
-            }
+        SolveExitState(other.gameObject);
+    }
+
+    private void SolveExitState(GameObject exitObject)
+    {
+        PlayerActivatable[] playerActivatables = exitObject.GetComponents<PlayerActivatable>();
+        if (playerActivatables == null) return;
+        foreach (PlayerActivatable playerActivatable in playerActivatables)
+        {
+            if (playerActivatable == null) continue;
+            _currentHits.Remove(playerActivatable);
+            _previousHits.Remove(playerActivatable);
         }
     }
 
     private void HandleCollision(GameObject obj) {
         PlayerActivatable[] playerActivatables = obj.GetComponents<PlayerActivatable>();
-        if (playerActivatables != null) {
-            foreach (PlayerActivatable playerActivatable in playerActivatables) {
-                if (playerActivatable != null && playerActivatable.canBeActivated) {
-                    _currentHits.Add(playerActivatable);
-                }
+        if (playerActivatables == null) return;
+        foreach (PlayerActivatable playerActivatable in playerActivatables) {
+            if (playerActivatable != null && playerActivatable.canBeActivated) {
+                _currentHits.Add(playerActivatable);
             }
         }
     }

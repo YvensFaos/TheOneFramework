@@ -1,16 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
-using Yarn;
-using System.Reflection;
 
+[RequireComponent(typeof(Collider))]
 public class DialogueTrigger : PlayerActivatable
 {
     public DialogueRunner dialogueRunner;
-    
     public string dialogueNodeName;
+
+    private void Awake()
+    {
+        Collider selfCollider = GetComponent<Collider>();
+        if (selfCollider.isTrigger) return;
+        Debug.LogWarning($"{gameObject.name} Dialogue Trigger is using a non-trigger collider. It will be forcibly set to trigger.");
+        selfCollider.isTrigger = true;
+    }
 
     override protected void OnActivate()
     {    
@@ -22,7 +25,6 @@ public class DialogueTrigger : PlayerActivatable
         } else {
             Debug.LogWarning("DialogueRunner component not assigned!");
         }
-
     }
 
     override protected bool IsActivated() {
@@ -31,5 +33,4 @@ public class DialogueTrigger : PlayerActivatable
         }
         return base.IsActivated();
     }
-
 }
