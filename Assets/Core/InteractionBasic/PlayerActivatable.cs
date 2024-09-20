@@ -4,7 +4,6 @@ using UnityEngine;
 using Yarn.Unity;
 using System;
 
-[RequireComponent(typeof(Collider))]
 public abstract class PlayerActivatable : MonoBehaviour
 {
     public bool canRepeat = false;
