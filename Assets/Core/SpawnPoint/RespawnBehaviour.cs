@@ -75,5 +75,8 @@ public class RespawnBehaviour : MonoBehaviour
         if (hit.collider.CompareTag("SpawnPoint")) {
             SetRespawnPoint(hit.gameObject);
         }
+        if (hit.collider.CompareTag("RespawnPlayers")) {
+            Respawn();
+        }
     }
 }
