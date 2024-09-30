@@ -12,5 +12,8 @@ https://bramsgames.itch.io/design-fundamentals-framework-demonstration
 Follow this link to the documentation:
 https://github.com/YvensFaos/TheOneFramework/blob/main/Doc/Framework%20documentation.pdf
 
+For questions, please visit our Discord server:
+https://discord.gg/DFnnuuHQ2P
+
 Follow this link for the beta version of the OneFramework GPT-Assistant:
 https://chatgpt.com/g/g-BxFTLFvLT-design-fundamentals
