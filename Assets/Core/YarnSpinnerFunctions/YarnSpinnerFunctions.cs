@@ -353,4 +353,34 @@ public static class YarnSpinnerFunctions
         Debug.LogWarning("UI not found: " + menuName);
     }
 
+    [YarnCommand("run_command")]
+    public static void RunCommand(string objectName, string scriptName, string methodName)
+    {
+        // Find the GameObject by name
+        GameObject targetObject = GameObject.Find(objectName);
+        if (targetObject == null)
+        {
+            Debug.LogError($"GameObject '{objectName}' not found.");
+            return;
+        }
+
+        // Get the component by name
+        var component = targetObject.GetComponent(scriptName);
+        if (component == null)
+        {
+            Debug.LogError($"Script '{scriptName}' not found on GameObject '{objectName}'.");
+            return;
+        }
+
+        // Call the method using reflection
+        var method = component.GetType().GetMethod(methodName);
+        if (method == null)
+        {
+            Debug.LogError($"Method '{methodName}' not found in script '{scriptName}'.");
+            return;
+        }
+
+        method.Invoke(component, null);
+    }    
+
 }
