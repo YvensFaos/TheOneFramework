@@ -14,6 +14,3 @@ https://github.com/YvensFaos/TheOneFramework/blob/main/Doc/Framework%20documenta
 
 For questions, please visit our Discord server:
 https://discord.gg/DFnnuuHQ2P
-
-Follow this link for the beta version of the OneFramework GPT-Assistant:
-https://chatgpt.com/g/g-BxFTLFvLT-design-fundamentals
