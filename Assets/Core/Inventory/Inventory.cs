@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
     public delegate void InventoryChanged();
     public event InventoryChanged OnInventoryChanged;
 
-    void Start()
+    void Awake()
     {
         while (items.Count < numberOfSlots)
         {
