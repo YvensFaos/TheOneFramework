@@ -7,7 +7,9 @@ using Yarn.Unity;
 public class RespawnBehaviour : MonoBehaviour
 {
     public GameObject spawnPoint = null;
-    private Vector3 respawnPoint;
+    private Transform respawnPoint;
+
+    private Transform teleportationTarget = null;
 
     public CinemachineVirtualCamera cinemachineVirtualCamera;
 
@@ -37,9 +39,17 @@ public class RespawnBehaviour : MonoBehaviour
         }
     }
 
+    void LateUpdate() 
+    {
+        if (teleportationTarget != null) {
+            TeleportImmediatelyTo(teleportationTarget);
+            teleportationTarget = null;
+        }
+    }
+
     public void SetRespawnPoint(GameObject spawnPoint)
     {
-        respawnPoint = spawnPoint.transform.position;
+        respawnPoint = spawnPoint.transform;
     }
 
     public void Respawn()
@@ -48,10 +58,15 @@ public class RespawnBehaviour : MonoBehaviour
     }
 
     public void Teleport(GameObject target) {
-        TeleportTo(target.transform.position);
+        TeleportTo(target.transform);
     }
 
-    public void TeleportTo(Vector3 targetPosition)
+    public void TeleportTo(Transform targetTransform)
+    {
+        teleportationTarget = targetTransform;
+    }
+
+    private void TeleportImmediatelyTo(Transform targetTransform)
     {
         var characterController = GetComponent<CharacterController>();
         if (characterController != null) {
@@ -61,7 +76,8 @@ public class RespawnBehaviour : MonoBehaviour
             }
 
             characterController.enabled = false;
-            transform.position = targetPosition;
+            transform.position = targetTransform.position;
+            transform.rotation = targetTransform.rotation;
             characterController.enabled = true;
 
             if (cinemachineVirtualCamera != null) {

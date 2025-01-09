@@ -195,7 +195,7 @@ public static class YarnSpinnerFunctions
         if (respawnBehaviour == null) return;
         GameObject location = FindGameObject(locationName);
         if (location == null) return;
-        respawnBehaviour.TeleportTo(location.transform.position);
+        respawnBehaviour.TeleportTo(location.transform);
     }
 
     [YarnCommand("say")]
