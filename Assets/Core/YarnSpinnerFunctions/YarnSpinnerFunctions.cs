@@ -381,6 +381,17 @@ public static class YarnSpinnerFunctions
         }
 
         method.Invoke(component, null);
-    }    
+    }  
+
+    [YarnCommand("move_item_to")]
+    public static void MoveItemTo(string itemToMoveName, string destinationItemName) 
+    {
+        GameObject itemToMove = FindGameObject(itemToMoveName);
+        GameObject destinationItem = FindGameObject(destinationItemName);
+        if (itemToMove != null && destinationItem != null) {
+            itemToMove.transform.position = destinationItem.transform.position;
+            itemToMove.transform.rotation = destinationItem.transform.rotation;
+        }
+    }  
 
 }
