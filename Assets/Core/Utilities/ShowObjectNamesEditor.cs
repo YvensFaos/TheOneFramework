@@ -16,8 +16,10 @@ public class ShowObjectNamesEditor : MonoBehaviour
             foreach (var renderer in FindObjectsOfType<Renderer>())
             {
                 if (renderer.gameObject.layer == 0) {
-                    Vector3 labelPosition = renderer.transform.position + new Vector3(0f, renderer.bounds.extents.y, 0f);
-                    Handles.Label(labelPosition, renderer.gameObject.name, style);
+                    if (renderer.gameObject.GetComponent<PlayerActivatable>()) {
+                        Vector3 labelPosition = renderer.transform.position + new Vector3(0f, renderer.bounds.extents.y, 0f);
+                        Handles.Label(labelPosition, renderer.gameObject.name, style);
+                    }
                 }
             }
         }
