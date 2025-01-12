@@ -394,4 +394,32 @@ public static class YarnSpinnerFunctions
         }
     }  
 
+    [YarnCommand("set_position")]
+    public static void SetPosition(string itemToPositionName, float x, float y, float z, bool localPosition=false) 
+    {
+        GameObject item = FindGameObject(itemToPositionName);
+        if (item != null) {
+            if (localPosition) {
+                item.transform.localPosition = new Vector3(x, y, z);            
+            } else {
+                item.transform.position = new Vector3(x, y, z);            
+            }
+        }
+
+    }
+
+    [YarnCommand("set_rotation")]
+    public static void SetRotation(string itemToPositionName, float x, float y, float z, bool localRotation=false) 
+    {
+        GameObject item = FindGameObject(itemToPositionName);
+        if (item != null) {
+            if (localRotation) {
+                item.transform.localEulerAngles = new Vector3(x, y, z);            
+            } else {
+                item.transform.eulerAngles = new Vector3(x, y, z);            
+            }
+        }
+
+    }
+
 }
