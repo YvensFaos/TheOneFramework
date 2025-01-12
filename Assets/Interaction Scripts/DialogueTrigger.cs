@@ -12,6 +12,14 @@ public class DialogueTrigger : PlayerActivatable
     
     public string dialogueNodeName;
 
+    void Start()
+    {
+        if (dialogueRunner == null) {
+            dialogueRunner = FindObjectOfType<DialogueRunner>();
+        }
+
+    }
+
     override protected void OnActivate()
     {    
         if (dialogueRunner != null) {

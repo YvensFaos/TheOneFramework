@@ -33,6 +33,9 @@ public class UseInventoryItemBase : PlayerActivatable
     }
 
     void Start() {
+        if (inventory == null) {
+            inventory = FindObjectOfType<Inventory>();
+        }
         SetPlayerActivatableState(false);
     }
 

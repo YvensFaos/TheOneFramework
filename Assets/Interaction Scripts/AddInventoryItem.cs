@@ -7,6 +7,12 @@ public class AddInventoryItem : PlayerActivatable
     public Inventory inventory;
     public InventoryItemDefinition item;
 
+    void Start() {
+        if (inventory == null) {
+            inventory = FindObjectOfType<Inventory>();
+        }
+    }
+
 
     override protected void OnActivate()
     {

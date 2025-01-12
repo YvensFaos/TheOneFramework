@@ -10,6 +10,12 @@ public class OnItemUnityEventTrigger : PlayerActivatable
     public UnityEvent onItemCheckPasses;
     public UnityEvent onItemCheckFails;
 
+    void Start() {
+        if (inventory == null) {
+            inventory = FindObjectOfType<Inventory>();
+        }
+    }
+
     override protected void OnActivate()
     {
         if (item == null) {

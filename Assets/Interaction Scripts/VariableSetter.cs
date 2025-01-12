@@ -23,6 +23,9 @@ public class VariableSetter : PlayerActivatable
 
     void Start() 
     {
+        if (dialogueSystem == null) {
+            dialogueSystem = FindObjectOfType<DialogueRunner>();
+        }
         if (dialogueSystem != null) {
             variableStorage = dialogueSystem.GetComponent<InMemoryVariableStorage>();
         }

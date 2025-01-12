@@ -8352,7 +8352,7 @@ MonoBehaviour:
   canRepeat: 1
   shouldActivateOnCollision: 0
   canBeActivated: 1
-  inventory: {fileID: 727444633}
+  inventory: {fileID: 0}
   item: {fileID: 11400000, guid: 60e820c1dfa9f474493f834122e98f43, type: 2}
   shouldRemoveFromInventory: 1
   invertItemCheck: 0
