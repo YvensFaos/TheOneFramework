@@ -10,7 +10,7 @@ public static class DependencyChecker
     static List<string> requirements = new List<string>{
         "com.unity.cinemachine",
         "com.unity.ai.navigation",
-        "com.unity.textmeshpro",
+        //"com.unity.textmeshpro",
         "com.unity.inputsystem",
         "com.unity.render-pipelines.universal",
         "dev.yarnspinner.unity",
