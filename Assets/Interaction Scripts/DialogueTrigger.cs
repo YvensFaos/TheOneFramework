@@ -12,10 +12,11 @@ public class DialogueTrigger : PlayerActivatable
     
     public string dialogueNodeName;
 
+    [System.Obsolete]
     void Start()
     {
         if (dialogueRunner == null) {
-            dialogueRunner = FindObjectOfType<DialogueRunner>();
+            dialogueRunner = FindFirstObjectByType<DialogueRunner>();
         }
 
     }

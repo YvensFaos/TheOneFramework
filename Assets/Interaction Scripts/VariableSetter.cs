@@ -21,10 +21,11 @@ public class VariableSetter : PlayerActivatable
 
     private VariableStorageBehaviour variableStorage;
 
+    [System.Obsolete]
     void Start() 
     {
         if (dialogueSystem == null) {
-            dialogueSystem = FindObjectOfType<DialogueRunner>();
+            dialogueSystem = FindFirstObjectByType<DialogueRunner>();
         }
         if (dialogueSystem != null) {
             variableStorage = dialogueSystem.GetComponent<InMemoryVariableStorage>();

@@ -124,16 +124,18 @@ public static class YarnSpinnerFunctions
 
 
     [YarnCommand("hide_path")]
+    [System.Obsolete]
     public static void HidePath() {
-        var pathVisualizer = GameObject.FindObjectOfType<PathVisualizer>();
+        var pathVisualizer = GameObject.FindFirstObjectByType<PathVisualizer>();
         if (pathVisualizer != null) {
             pathVisualizer.ClearPath();
         }
     }
 
     [YarnCommand("show_path")]
+    [System.Obsolete]
     public static System.Collections.IEnumerator ShowPath(string fromName, string toName, bool shouldWait=true, float minDistance=DefaultMinDistance) {
-        var pathVisualizer = GameObject.FindObjectOfType<PathVisualizer>();
+        var pathVisualizer = GameObject.FindFirstObjectByType<PathVisualizer>();
         if (pathVisualizer != null) {
             GameObject from = FindGameObject(fromName);
             GameObject to = FindGameObject(toName);
@@ -199,6 +201,7 @@ public static class YarnSpinnerFunctions
     }
 
     [YarnCommand("say")]
+    [System.Obsolete]
     public static IEnumerator Say2(string targetName, string message, float offset_y = 0.0f, bool shouldWait=true) 
     {
         GameObject target = FindGameObject(targetName);
@@ -206,7 +209,7 @@ public static class YarnSpinnerFunctions
             return null; 
         } else {
             Vector3 offset = new Vector3(0f, offset_y, 0f);
-            return GameObject.FindObjectOfType<SpeechBubbleManager>().AddSpeechBubble(target, offset, message, shouldWait);
+            return GameObject.FindFirstObjectByType<SpeechBubbleManager>().AddSpeechBubble(target, offset, message, shouldWait);
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 [InitializeOnLoad]
 public class FMODChecker
 {
+    [System.Obsolete]
     static FMODChecker()
     {
         // Check if FMOD is present by trying to find an FMOD class

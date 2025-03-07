@@ -73,15 +73,17 @@ public class PathVisualizer : MonoBehaviour
         showPath = false;
     }
 
+    [System.Obsolete]
     public static void HidePath() {
-        var pathVisualizer = FindObjectOfType<PathVisualizer>();
+        var pathVisualizer = FindFirstObjectByType<PathVisualizer>();
         if (pathVisualizer != null) {
             pathVisualizer.ClearPath();
         }
     }
 
+    [System.Obsolete]
     public static System.Collections.IEnumerator ShowPath(GameObject from, GameObject to, bool shouldWait=true, float minDistance=DefaultMinDistance) {
-        var pathVisualizer = FindObjectOfType<PathVisualizer>();
+        var pathVisualizer = FindFirstObjectByType<PathVisualizer>();
         if (pathVisualizer != null) {
             pathVisualizer.SetTargets(from.transform, to.transform);
             if (shouldWait) {

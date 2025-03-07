@@ -7,9 +7,10 @@ public class AddInventoryItem : PlayerActivatable
     public Inventory inventory;
     public InventoryItemDefinition item;
 
+    [System.Obsolete]
     void Start() {
         if (inventory == null) {
-            inventory = FindObjectOfType<Inventory>();
+            inventory = FindFirstObjectByType<Inventory>();
         }
     }
 

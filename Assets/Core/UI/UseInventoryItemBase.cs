@@ -32,9 +32,10 @@ public class UseInventoryItemBase : PlayerActivatable
         }
     }
 
+    [System.Obsolete]
     void Start() {
         if (inventory == null) {
-            inventory = FindObjectOfType<Inventory>();
+            inventory = FindFirstObjectByType<Inventory>();
         }
         SetPlayerActivatableState(false);
     }

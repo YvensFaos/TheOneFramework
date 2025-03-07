@@ -23,9 +23,10 @@ public class ProximityTrigger : MonoBehaviour
 
     private Transform proximityRoot = null;
 
+    [System.Obsolete]
     void Start()
     {
-        proximityRoot = FindObjectOfType<ProximityTriggerRoot>().transform;
+        proximityRoot = FindFirstObjectByType<ProximityTriggerRoot>().transform;
         if (proximityRoot == null) {
             Debug.LogWarning("No ProximityTriggerRoot found in scene. ProximityTrigger will be deactivated");
             enabled = false;

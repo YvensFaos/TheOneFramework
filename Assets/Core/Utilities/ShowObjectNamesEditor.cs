@@ -5,6 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ShowObjectNamesEditor : MonoBehaviour
 {
+    [System.Obsolete]
     void OnDrawGizmos()
     {
         if (Application.isEditor && !Application.isPlaying)

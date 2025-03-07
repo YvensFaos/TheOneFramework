@@ -10,9 +10,10 @@ public class OnItemUnityEventTrigger : PlayerActivatable
     public UnityEvent onItemCheckPasses;
     public UnityEvent onItemCheckFails;
 
+    [System.Obsolete]
     void Start() {
         if (inventory == null) {
-            inventory = FindObjectOfType<Inventory>();
+            inventory = FindFirstObjectByType<Inventory>();
         }
     }
 
