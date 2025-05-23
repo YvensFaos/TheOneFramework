@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Cinemachine;
-using Yarn.Unity;
+using UnityEngine;
+using UnityEngine.AI;
 
 public class RespawnBehaviour : MonoBehaviour
 {
+    [Tooltip("Should this object teleport to the spawn point at the start?")]
+    public bool teleportOnStart;
     public GameObject spawnPoint = null;
     private Transform respawnPoint;
 
@@ -17,10 +17,15 @@ public class RespawnBehaviour : MonoBehaviour
 
     void Start()
     {
-        if (spawnPoint != null) {
+        if (!teleportOnStart)
+            return;
+        if (spawnPoint != null)
+        {
             SetRespawnPoint(spawnPoint);
             Respawn();
-        } else {
+        }
+        else
+        {
             var spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
             if (spawns.Length > 0)
             {
@@ -39,9 +44,10 @@ public class RespawnBehaviour : MonoBehaviour
         }
     }
 
-    void LateUpdate() 
+    void LateUpdate()
     {
-        if (teleportationTarget != null) {
+        if (teleportationTarget != null)
+        {
             TeleportImmediatelyTo(teleportationTarget);
             teleportationTarget = null;
         }
@@ -57,7 +63,8 @@ public class RespawnBehaviour : MonoBehaviour
         TeleportTo(respawnPoint);
     }
 
-    public void Teleport(GameObject target) {
+    public void Teleport(GameObject target)
+    {
         TeleportTo(target.transform);
     }
 
@@ -68,30 +75,62 @@ public class RespawnBehaviour : MonoBehaviour
 
     private void TeleportImmediatelyTo(Transform targetTransform)
     {
-        var characterController = GetComponent<CharacterController>();
-        if (characterController != null) {
-            var currentCameraPosition = Vector3.zero;
-            if (cinemachineVirtualCamera != null) {
-                currentCameraPosition = cinemachineVirtualCamera.m_Follow.transform.position;
-            }
+        if (TryGetComponent<NavMeshAgent>(out var navMeshAgent))
+        {
+            TeleportNPC(targetTransform, navMeshAgent);
+        }
+        else
+        if (TryGetComponent<CharacterController>(out var characterController))
+        {
+            TeleportPlayer(targetTransform, characterController);
+        }
+    }
 
-            characterController.enabled = false;
-            transform.position = targetTransform.position;
-            transform.rotation = targetTransform.rotation;
-            characterController.enabled = true;
+    private void TeleportNPC(Transform targetTransform, NavMeshAgent navMeshAgent)
+    {
+        var currentCameraPosition = Vector3.zero;
+        if (cinemachineVirtualCamera != null)
+        {
+            currentCameraPosition = cinemachineVirtualCamera.m_Follow.transform.position;
+        }
 
-            if (cinemachineVirtualCamera != null) {
-                cinemachineVirtualCamera.OnTargetObjectWarped(cinemachineVirtualCamera.m_Follow, cinemachineVirtualCamera.m_Follow.transform.position - currentCameraPosition);
-            }
+        navMeshAgent.enabled = false;
+        navMeshAgent.Warp(targetTransform.position);
+        transform.rotation = targetTransform.rotation;
+        navMeshAgent.enabled = true;
+
+        if (cinemachineVirtualCamera != null)
+        {
+            cinemachineVirtualCamera.OnTargetObjectWarped(cinemachineVirtualCamera.m_Follow, cinemachineVirtualCamera.m_Follow.transform.position - currentCameraPosition);
+        }
+    }
+
+    private void TeleportPlayer(Transform targetTransform, CharacterController characterController)
+    {
+        var currentCameraPosition = Vector3.zero;
+        if (cinemachineVirtualCamera != null)
+        {
+            currentCameraPosition = cinemachineVirtualCamera.m_Follow.transform.position;
+        }
+
+        characterController.enabled = false;
+        transform.SetPositionAndRotation(targetTransform.position, targetTransform.rotation);
+        characterController.enabled = true;
+
+        if (cinemachineVirtualCamera != null)
+        {
+            cinemachineVirtualCamera.OnTargetObjectWarped(cinemachineVirtualCamera.m_Follow, cinemachineVirtualCamera.m_Follow.transform.position - currentCameraPosition);
         }
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.CompareTag("SpawnPoint")) {
+        if (hit.collider.CompareTag("SpawnPoint"))
+        {
             SetRespawnPoint(hit.gameObject);
         }
-        if (hit.collider.CompareTag("RespawnPlayers")) {
+        if (hit.collider.CompareTag("RespawnPlayers"))
+        {
             Respawn();
         }
     }
