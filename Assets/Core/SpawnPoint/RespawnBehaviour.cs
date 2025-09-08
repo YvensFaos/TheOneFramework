@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 using Yarn.Unity;
 
 public class RespawnBehaviour : MonoBehaviour
@@ -11,7 +11,7 @@ public class RespawnBehaviour : MonoBehaviour
 
     private Transform teleportationTarget = null;
 
-    public CinemachineVirtualCamera cinemachineVirtualCamera;
+    public CinemachineCamera cinemachineCamera;
 
     public float fallThreshold = -10f;
 
@@ -71,8 +71,8 @@ public class RespawnBehaviour : MonoBehaviour
         var characterController = GetComponent<CharacterController>();
         if (characterController != null) {
             var currentCameraPosition = Vector3.zero;
-            if (cinemachineVirtualCamera != null) {
-                currentCameraPosition = cinemachineVirtualCamera.m_Follow.transform.position;
+            if (cinemachineCamera != null) {
+                currentCameraPosition = cinemachineCamera.Follow.transform.position;
             }
 
             characterController.enabled = false;
@@ -80,8 +80,8 @@ public class RespawnBehaviour : MonoBehaviour
             transform.rotation = targetTransform.rotation;
             characterController.enabled = true;
 
-            if (cinemachineVirtualCamera != null) {
-                cinemachineVirtualCamera.OnTargetObjectWarped(cinemachineVirtualCamera.m_Follow, cinemachineVirtualCamera.m_Follow.transform.position - currentCameraPosition);
+            if (cinemachineCamera != null) {
+                cinemachineCamera.OnTargetObjectWarped(cinemachineCamera.Follow, cinemachineCamera.Follow.transform.position - currentCameraPosition);
             }
         }
     }
