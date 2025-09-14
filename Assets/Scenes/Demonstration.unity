@@ -1754,78 +1754,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8455446173765077789}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1511531283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2753718019152108427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097b95c9f69f04f2d8c08a817e7786af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueView: {fileID: 501256396}
-  continueActionType: 1
-  continueActionKeyCode: 101
-  continueActionButtonName: Jump
-  continueActionOnButtonRelease: 1
-  continueActionReference: {fileID: 0}
-  continueAction:
-    m_Name: Skip
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: 4ff20b4e-d211-4566-9c5e-9e9e0fd87877
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 0376c093-0092-4974-9ac7-f9ea5a0e5074
-      m_Path: Submit
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Skip
-      m_Flags: 0
-    m_Flags: 0
-  enableActionOnStart: 1
---- !u!114 &1511531284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2753718019152108427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 097b95c9f69f04f2d8c08a817e7786af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueView: {fileID: 501256396}
-  continueActionType: 1
-  continueActionKeyCode: 13
-  continueActionButtonName: Jump
-  continueActionOnButtonRelease: 1
-  continueActionReference: {fileID: 0}
-  continueAction:
-    m_Name: Skip
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: 717f5fbb-f44a-4054-9c18-f348b4f98cf1
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: e2147963-3473-4d2e-8a47-5495d7b8f73d
-      m_Path: Submit
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Skip
-      m_Flags: 0
-    m_Flags: 0
-  enableActionOnStart: 1
 --- !u!1001 &1581145513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5310,8 +5238,6 @@ GameObject:
   - component: {fileID: 3183266951644473845}
   - component: {fileID: 3579681404714816502}
   - component: {fileID: 3831113772180280289}
-  - component: {fileID: 1511531284}
-  - component: {fileID: 1511531283}
   m_Layer: 0
   m_Name: Demo Dialogue System (YarnSpinner)
   m_TagString: Untagged
